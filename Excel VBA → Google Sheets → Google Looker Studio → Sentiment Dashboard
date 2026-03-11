@@ -1,0 +1,247 @@
+Raw Customer Reviews (Excel)
+        ↓
+VBA Automation
+ - Data Cleaning
+ - Text Processing
+ - Sentiment Score
+        ↓
+Upload to Google Sheets
+        ↓
+Connect Google Sheets to Looker Studio
+        ↓
+Build Sentiment Dashboard
+
+
+SAMPLE DATA IN EXCEL
+
+| Date     | Product | Review                |
+| -------- | ------- | --------------------- |
+| 1-1-2026 | Mobile  | Very good product     |
+| 2-1-2026 | Laptop  | Worst battery         |
+| 3-1-2026 | Mobile  | Excellent performance |
+
+
+
+
+Excel File Setup
+
+Create 3 Sheets
+
+Raw_Data
+Clean_Data
+Sentiment_Result
+
+
+
+
+Raw_Data Example
+
+A      	B	      C
+Date	Product	Review
+1-Jan	Mobile	Very good product
+2-Jan	Laptop	Worst battery
+
+VBA Module Structure
+
+Press
+
+CREATE VBA MACROS
+
+ALT + F11
+Insert → Module
+
+Create 3 modules
+
+Module1 → Data Cleaning
+Module2 → Sentiment Analysis
+Module3 → Controller Automation
+
+====================================================
+Sub CleanData()
+
+Dim ws1 As Worksheet
+Dim ws2 As Worksheet
+Dim lastrow As Long
+Dim i As Long
+
+Set ws1 = Sheets("Raw_Data")
+Set ws2 = Sheets("Clean_Data")
+
+lastrow = ws1.Cells(Rows.Count, 1).End(xlUp).Row
+
+ws2.Cells.Clear
+
+ws2.Range("A1:C1") = Array("Date", "Product", "Review")
+
+For i = 2 To lastrow
+
+If ws1.Cells(i, 3).Value <> "" Then
+
+ws2.Cells(i, 1).Value = ws1.Cells(i, 1).Value
+ws2.Cells(i, 2).Value = ws1.Cells(i, 2).Value
+ws2.Cells(i, 3).Value = LCase(Trim(ws1.Cells(i, 3).Value))
+
+End If
+
+Next i
+
+MsgBox "Data Cleaning Completed"
+
+End Sub
+
+
+
+
+==================================================
+Sub SentimentAnalysis()
+
+Dim ws As Worksheet
+Dim ws2 As Worksheet
+Dim lastrow As Long
+Dim review As String
+Dim sentiment As String
+Dim i As Long
+
+Set ws = Sheets("Clean_Data")
+Set ws2 = Sheets("Sentiment_Result")
+
+lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+ws2.Cells.Clear
+ws2.Range("A1:D1") = Array("Date", "Product", "Review", "Sentiment")
+
+For i = 2 To lastrow
+
+review = ws.Cells(i, 3).Value
+
+If review Like "*good*" Or review Like "*excellent*" Or review Like "*great*" Then
+sentiment = "Positive"
+
+ElseIf review Like "*bad*" Or review Like "*worst*" Or review Like "*poor*" Then
+sentiment = "Negative"
+
+Else
+sentiment = "Neutral"
+
+End If
+
+ws2.Cells(i, 1).Value = ws.Cells(i, 1).Value
+ws2.Cells(i, 2).Value = ws.Cells(i, 2).Value
+ws2.Cells(i, 3).Value = review
+ws2.Cells(i, 4).Value = sentiment
+
+Next i
+
+MsgBox "Sentiment Analysis Completed"
+
+End Sub
+
+======================================================================
+
+
+Sub Run_Full_Automation()
+
+Call CleanData
+Call SentimentAnalysis
+
+MsgBox "Full Automation Completed"
+
+End Sub
+
+======================================================================
+
+Add button
+
+Developer → Insert → Button
+Assign Macro → Run_Full_Automation
+
+=============================================================
+
+Upload Data to Google Sheets
+
+Copy Sentiment_Result
+
+Paste into Google Sheets
+
+
+=============================================
+
+onnect Google Sheets to Looker Studio
+
+Go to
+
+https://lookerstudio.google.com
+
+Steps
+
+Create Report
+↓
+Add Data
+↓
+Google Sheets
+↓
+Select your sheet
+↓
+Connect
+
+
+
+Build Sentiment Dashboard
+
+Add charts
+
+1️⃣ Scorecard
+Total Reviews
+
+Metric
+
+COUNT(Review)
+2️⃣ Sentiment Distribution
+
+Chart
+
+Pie Chart
+
+Dimension
+
+Sentiment
+
+Metric
+
+Record Count
+3️⃣ Reviews by Product
+
+Chart
+
+Bar Chart
+
+Dimension
+
+Product
+
+Metric
+
+Record Count
+
+Breakdown
+
+Sentiment
+4️⃣ Sentiment Trend
+
+Chart
+
+Time Series
+
+Dimension
+
+Date
+
+Metric
+
+Record Count
+
+Breakdown
+
+Sentiment
+
+
