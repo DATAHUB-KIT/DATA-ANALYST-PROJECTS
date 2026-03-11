@@ -162,7 +162,20 @@ Region Sentiment Map
 Sentiment Trend Over Time
 
 
-
+Portfolio / GitHub Structure
+Sentiment-Analysis-PowerBI
+│
+├ dataset
+│  └ customer_reviews.xlsx
+│
+├ powerbi_dashboard
+│  └ sentiment_dashboard.pbix
+│
+├ python_script
+│  └ sentiment_analysis.py
+│
+└ screenshots
+   └ dashboard.png
 
 
 
