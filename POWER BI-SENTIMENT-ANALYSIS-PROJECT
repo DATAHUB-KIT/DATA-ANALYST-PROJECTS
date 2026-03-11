@@ -1,0 +1,169 @@
+OPEN ANACONDA PROMPT INSTALL  
+pip install textblob
+
+
+Step 1 — Create Sample Dataset
+
+Create Excel file customer_reviews.xlsx
+
+ReviewID	Date	Product	Customer	Region	ReviewText
+1	01-01-2025	Laptop	John	USA	Excellent product very fast
+2	02-01-2025	Laptop	Mary	UK	Battery is very poor
+3	03-01-2025	Phone	David	India	Good phone but expensive
+4	05-01-2025	Phone	Sam	USA	Amazing performance
+5	06-01-2025	Tablet	Ravi	India	Very slow and bad
+
+Save file.
+
+
+
+load to power bi in transform power query editor extract columns 
+Data Transformation
+
+Create new columns.
+
+Extract Year
+
+Extract Month
+
+
+
+create python script for sentiment
+
+from textblob import TextBlob
+import pandas as pd
+
+dataset = dataset.copy()
+
+def get_sentiment(text):
+    polarity = TextBlob(text).sentiment.polarity
+    
+    if polarity > 0:
+        return "Positive"
+    elif polarity < 0:
+        return "Negative"
+    else:
+        return "Neutral"
+
+dataset['Sentiment'] = dataset['ReviewText'].apply(get_sentiment)
+
+result = dataset
+
+
+
+
+Create DAX Measures
+Total Reviews
+Total Reviews =
+COUNT(FactReviews[ReviewID])
+Positive Reviews
+Positive Reviews =
+CALCULATE(
+COUNT(FactReviews[ReviewID]),
+FactReviews[Sentiment] = "Positive"
+)
+Negative Reviews
+Negative Reviews =
+CALCULATE(
+COUNT(FactReviews[ReviewID]),
+FactReviews[Sentiment] = "Negative"
+)
+Sentiment Score
+Sentiment Score =
+DIVIDE([Positive Reviews], [Total Reviews])
+
+
+ Build Power BI Dashboard
+
+Create visuals.
+
+1️⃣ KPI Cards
+Total Reviews
+Positive Reviews
+Negative Reviews
+2️⃣ Sentiment Distribution
+
+Chart:
+
+Donut Chart
+
+Fields:
+
+Legend → Sentiment
+Values → Total Reviews
+3️⃣ Sentiment by Product
+
+Chart:
+
+Stacked Column Chart
+
+Axis:
+
+Product
+
+Legend:
+
+Sentiment
+4️⃣ Sentiment Trend Over Time
+
+Chart:
+
+Line Chart
+
+Axis:
+
+Date
+
+Values:
+
+Total Reviews
+
+Legend:
+
+Sentiment
+5️⃣ Region Analysis
+
+Chart:
+
+Map or Bar Chart
+
+Fields:
+
+Region
+Sentiment
+1️⃣1️⃣ Step 10 — Add Filters
+
+Add slicers:
+
+Year
+Product
+Region
+Sentiment
+
+Users can analyze feedback interactively.
+
+Final Dashboard Layout
+
+Example layout:
+
+--------------------------------
+Customer Sentiment Dashboard
+--------------------------------
+
+KPI Cards
+Total Reviews | Positive | Negative
+
+Sentiment Distribution (Donut)
+
+Product Sentiment Analysis
+
+Region Sentiment Map
+
+Sentiment Trend Over Time
+
+
+
+
+
+
+
