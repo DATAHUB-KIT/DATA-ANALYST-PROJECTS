@@ -36,8 +36,7 @@ model.fit(X, y)
 # Add predictions to dataset
 df['Predicted_Sales'] = model.predict(X)
 
-# Return dataset
-df
+
 
 # Return dataset
 intercept = model.intercept_
