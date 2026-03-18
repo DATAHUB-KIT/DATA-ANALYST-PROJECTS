@@ -1,0 +1,39 @@
+# 'dataset' holds the input data for this script
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+
+# Load dataset from Power BI
+df = dataset
+
+# Ensure numeric
+df['Marketing_Spend'] = pd.to_numeric(df['Marketing_Spend'])
+df['Sales'] = pd.to_numeric(df['Sales'])
+
+# Model
+X = df[['Marketing_Spend']]
+y = df['Sales']
+
+model = LinearRegression()
+model.fit(X, y)
+
+# Add predictions to dataset
+df['Predicted_Sales'] = model.predict(X)
+
+# Return dataset
+df
+
+=================================================
+
+import matplotlib.pyplot as plt
+
+df = dataset
+
+# Actual points
+plt.scatter(df['Marketing_Spend'], df['Sales'], label='Actual')
+
+# Predicted points
+plt.scatter(df['Marketing_Spend'], df['Predicted_Sales'], label='Predicted')
+
+# Regression line
+plt.plot(df['Marketing_Spend'], df['Predicted_Sales'], label='Regression Line')
+
