@@ -52,6 +52,14 @@ df['Predicted_Sales'] = model.predict(X)
 # Return dataset
 df
 
+# Return dataset
+df['intercept']=model.intercept_
+df
+coeff_df = pd.DataFrame(model.coef_,X.columns,
+			columns=['Coefficient'])
+coeff_df
+
+
 =================================================
 
 import matplotlib.pyplot as plt
