@@ -15,19 +15,6 @@ Nov	7000	48000
 Dec	7500	50000
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 # 'dataset' holds the input data for this script
 import pandas as pd
 from sklearn.linear_model import LinearRegression
