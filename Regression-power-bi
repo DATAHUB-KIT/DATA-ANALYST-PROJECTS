@@ -23,8 +23,11 @@ from sklearn.linear_model import LinearRegression
 df = dataset
 
 # Ensure numeric
-df['Marketing_Spend'] = pd.to_numeric(df['Marketing_Spend'])
-df['Sales'] = pd.to_numeric(df['Sales'])
+#df['Marketing_Spend'] = pd.to_numeric(df['Marketing_Spend'])
+#df['Sales'] = pd.to_numeric(df['Sales'])
+#df=dataset
+#df['Marketing_Spend'] = df['Marketing_Spend'].fillna(df['Marketing_Spend'].mean())
+#df['Sales'] = df['Sales'].fillna(df['Sales'].mean())
 
 # Model
 X = df[['Marketing_Spend']]
