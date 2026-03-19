@@ -1,0 +1,61 @@
+import pandas as pd
+from mlxtend.frequent_patterns import apriori, association_rules
+df=dataset
+# Load data
+df = pd.read_csv("d://datasets/transaction.csv")
+
+# Clean column names
+df.columns = df.columns.str.strip().str.lower()
+
+# -----------------------------------
+# Step 1: Split items (IMPORTANT)
+# -----------------------------------
+df['items'] = df['items'].str.strip(',')   # remove trailing comma if any
+df['items'] = df['items'].str.split(',')
+
+# -----------------------------------
+# Step 2: Convert to rows
+# -----------------------------------
+df_exploded = df.explode('items')
+
+# -----------------------------------
+# Step 3: Create basket matrix
+# -----------------------------------
+user_item = df_exploded.pivot_table(
+    index='tid',
+    columns='items',
+    aggfunc='size',
+    fill_value=0
+)
+
+# Convert to boolean
+basket = user_item > 0
+
+# -----------------------------------
+# Step 4: Apply Apriori
+# -----------------------------------
+freq_items = apriori(basket, min_support=0.2, use_colnames=True)
+
+# -----------------------------------
+# Step 5: Association Rules
+# -----------------------------------
+if not freq_items.empty:
+    rules = association_rules(freq_items, metric="confidence", min_threshold=0.3)
+
+    if not rules.empty:
+        rules_df = rules[['antecedents','consequents','support','confidence','lift']].copy()
+
+        # Convert frozenset to string
+        rules_df['antecedents'] = rules_df['antecedents'].apply(lambda x: ', '.join(list(x)))
+        rules_df['consequents'] = rules_df['consequents'].apply(lambda x: ', '.join(list(x)))
+
+        rules_df = rules_df.sort_values(by='lift', ascending=False)
+    else:
+        rules_df = pd.DataFrame({'message': ['No rules found']})
+else:
+    rules_df = pd.DataFrame({'message': ['No frequent itemsets found']})
+
+# -----------------------------------
+# Final Output
+# -----------------------------------
+rules_df
