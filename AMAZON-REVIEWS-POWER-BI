@@ -83,7 +83,34 @@ scores.plot(kind='bar')
 plt.title(f"Recommendations for {product}")
 plt.show()
 
+
+
 7.
+from mlxtend.frequent_patterns import apriori, association_rules
+
+basket = user_item.astype(bool)
+
+freq_items = apriori(basket, min_support=0.4, use_colnames=True)
+rules = association_rules(freq_items, metric="confidence", min_threshold=0.6)
+
+# Display top rules
+rules = rules.sort_values(by='confidence', ascending=False)
+
+print(rules[['antecedents','consequents','confidence']])
+
+
+8.
+Excel / Database
+       ↓
+Power BI Data Model
+       ↓
+Python Script (ML logic)
+       ↓
+Recommendation Output
+       ↓
+Dashboard (Visuals + Slicers)
+
+
 
 
 
