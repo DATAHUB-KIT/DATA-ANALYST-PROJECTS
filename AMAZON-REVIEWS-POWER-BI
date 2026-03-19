@@ -53,6 +53,9 @@ similarity = cosine_similarity(item_matrix)
 similarity_df = pd.DataFrame(similarity,
                             index=item_matrix.index,
                             columns=item_matrix.index)
+similarity_df
+
+
 
 # Example: Recommend for Laptop
 product = 'Laptop'
@@ -96,8 +99,15 @@ rules = association_rules(freq_items, metric="confidence", min_threshold=0.6)
 # Display top rules
 rules = rules.sort_values(by='confidence', ascending=False)
 
-print(rules[['antecedents','consequents','confidence']])
+#print(rules[['antecedents','consequents','confidence']])
+rules_df = rules[['antecedents','consequents','confidence']].copy()
 
+# Convert frozenset → string (VERY IMPORTANT for display)
+rules_df['antecedents'] = rules_df['antecedents'].apply(lambda x: ', '.join(list(x)))
+rules_df['consequents'] = rules_df['consequents'].apply(lambda x: ', '.join(list(x)))
+
+# Final output
+rules_df
 
 8.
 Excel / Database
