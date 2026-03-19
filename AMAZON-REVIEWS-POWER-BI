@@ -1,0 +1,41 @@
+1. CREATE EXCEL FILE
+
+| User | Product  |
+| ---- | -------- |
+| U1   | Laptop   |
+| U1   | Mouse    |
+| U1   | Keyboard |
+| U2   | Laptop   |
+| U2   | Mouse    |
+| U3   | Laptop   |
+| U3   | Keyboard |
+| U4   | Mouse    |
+| U4   | Keyboard |
+| U5   | Laptop   |
+
+
+
+2. Load Data into Power BI
+
+Open Power BI Desktop
+
+Click Get Data → Excel
+
+Load sales_data.xlsx
+
+Click Transform Data (optional cleanup)
+
+
+3. INSTALL IN YOUR PYTHON PATH
+
+Install required libraries:
+
+pip install pandas scikit-learn mlxtend matplotlib
+
+Click Close & Apply
+
+
+
+
+
+
