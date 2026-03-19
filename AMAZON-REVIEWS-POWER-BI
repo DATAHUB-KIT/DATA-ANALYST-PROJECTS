@@ -29,7 +29,7 @@ Click Transform Data (optional cleanup)
 
 Install required libraries:
 
-pip install pandas scikit-learn mlxtend matplotlib
+pip install mlxtend 
 
 Click Close & Apply
 
