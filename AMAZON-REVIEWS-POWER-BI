@@ -14,7 +14,6 @@
 | U5   | Laptop   |
 
 
-
 2. Load Data into Power BI
 
 Open Power BI Desktop
@@ -34,8 +33,57 @@ pip install pandas scikit-learn mlxtend matplotlib
 
 Click Close & Apply
 
+4. Python Script (Paste inside Power BI)
 
 
+import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
+import matplotlib.pyplot as plt
+
+# Load dataset from Power BI
+df = dataset
+
+# Create user-item matrix
+user_item = pd.crosstab(df['User'], df['Product'])
+
+# Item-based collaborative filtering
+item_matrix = user_item.T
+similarity = cosine_similarity(item_matrix)
+
+similarity_df = pd.DataFrame(similarity,
+                            index=item_matrix.index,
+                            columns=item_matrix.index)
+
+# Example: Recommend for Laptop
+product = 'Laptop'
+
+scores = similarity_df[product].sort_values(ascending=False)[1:4]
+
+# Plot recommendations
+scores.plot(kind='bar')
+plt.title(f"Top Recommendations for {product}")
+plt.xlabel("Products")
+plt.ylabel("Similarity Score")
+plt.xticks(rotation=45)
+plt.show()
+
+
+6.
+6. Dynamic Recommendation (User Selection)
+
+Add Product slicer
+
+Update Python Code:
+# Get selected product dynamically
+product = df['Product'].iloc[0]
+
+scores = similarity_df[product].sort_values(ascending=False)[1:4]
+
+scores.plot(kind='bar')
+plt.title(f"Recommendations for {product}")
+plt.show()
+
+7.
 
 
 
