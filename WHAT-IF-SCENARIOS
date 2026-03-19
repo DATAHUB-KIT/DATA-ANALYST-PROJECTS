@@ -1,0 +1,191 @@
+1. Problem Statement (Scenario)
+We want to simulate:
+
+👉 “What happens to EMI when Interest Rate changes?”
+👉 “What happens to Profit when Cost/Price changes?”
+
+This is called What-if Analysis in Power BI.
+
+🔷 2. Sample Dataset (Loan Data)
+
+Create an Excel table like this:
+
+Customer	Loan Amount	Tenure 
+A	500000	5
+B	800000	10
+C	300000	3
+D	1000000	15
+
+👉 Load this into Power BI:
+
+Open Power BI
+
+Click Home → Get Data → Excel → Load
+
+🔷 3. Create What-if Parameter (Interest Rate)
+Step:
+
+Go to Modeling Tab
+
+Click New Parameter
+
+Configure:
+
+Name: Interest Rate
+
+Data Type: Decimal Number
+
+Min: 5
+
+Max: 15
+
+Increment: 0.5
+
+Default: 8
+
+✅ This creates:
+
+Parameter table
+
+Slicer (auto)
+
+🔷 4. EMI Formula (Core Logic)
+
+EMI Formula:
+
+Where:
+
+P = Loan Amount
+
+r = Monthly Interest Rate
+
+n = Number of Months
+
+🔷 5. Create Measure for EMI
+
+Go to Modeling → New Measure
+
+EMI = 
+VAR LoanAmount = SUM('LoanData'[Loan Amount])
+VAR AnnualRate = SELECTEDVALUE('Interest Rate'[Interest Rate Value])
+VAR MonthlyRate = AnnualRate / 12 / 100
+VAR TenureMonths = SUM('LoanData'[Tenure (Years)]) * 12
+
+RETURN 
+(LoanAmount * MonthlyRate * POWER(1 + MonthlyRate, TenureMonths)) /
+(POWER(1 + MonthlyRate, TenureMonths) - 1)
+🔷 6. Create Visualization
+Add:
+
+Table Visual
+
+Customer
+
+Loan Amount
+
+EMI
+
+Slicer
+
+Interest Rate (auto created)
+
+🔷 7. Result (Dynamic Simulation)
+
+👉 When you move the slicer:
+
+EMI increases/decreases instantly
+
+Entire dashboard updates dynamically
+=========================================================
+. Profit Simulation Example (Business Use Case)
+Sample Data
+Product	Cost	Selling Price	Quantity
+A	100	150	10
+B	200	260	20
+C	300	400	15
+
+============================================================================
+Create What-if Parameter
+
+Name: Price Increase %
+
+Range: 0 → 20
+
+Profit Measure
+Adjusted Price = 
+SUM('Sales'[Selling Price]) * (1 + SELECTEDVALUE('Price Increase %'[Value]) / 100)
+
+Profit = 
+( [Adjusted Price] - SUM('Sales'[Cost]) ) * SUM('Sales'[Quantity])
+🔷 9. Visualization
+
+Add:
+
+Bar Chart → Product vs Profit
+
+Slicer → Price Increase %
+
+🔷 10. Business Insights
+
+👉 Loan Scenario:
+
+Higher interest → higher EMI
+
+Helps banks predict customer affordability
+
+👉 Profit Scenario:
+
+Small price increase → large profit change
+
+Helps in pricing strategy
+
+🔷 11. Advanced Enhancements
+
+You can extend this with:
+
+✔ Multiple parameters:
+
+Interest Rate
+
+Loan Tenure
+
+Loan Amount
+
+✔ Add KPI Cards:
+
+Total EMI
+
+Total Profit
+
+✔ Add Conditional Formatting:
+
+High EMI → Red
+
+Low Profit → Alert
+
+✔ Use Python in Power BI:
+
+Regression prediction on EMI trends
+
+🔷 12. Architecture (End-to-End Flow)
+Excel Data → Power BI Load
+        ↓
+What-if Parameter (Dynamic Input)
+        ↓
+DAX Measures (EMI / Profit)
+        ↓
+Visuals (Charts + Slicers)
+        ↓
+Interactive Dashboard
+
+🔷 13. Real-World Use Cases
+
+Banking → Loan EMI Simulation
+
+Retail → Price Optimization
+
+Finance → Risk Analysis
+
+Supply Chain → Cost Impact
+
+If you want next level 🚀
