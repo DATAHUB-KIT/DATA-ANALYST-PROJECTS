@@ -1,0 +1,77 @@
+| Transaction ID | Product |
+| -------------- | ------- |
+| T001           | Bread   |
+| T001           | Butter  |
+| T001           | Milk    |
+| T002           | Bread   |
+| T002           | Eggs    |
+| T003           | Bread   |
+| T003           | Butter  |
+| T004           | Milk    |
+| T004           | Eggs    |
+| T005           | Bread   |
+| T005           | Butter  |
+| T005           | Milk    |
+
+create transaction file in .txt and get in to power bi
+pip install pandas
+pip install mlxtend
+
+Step 3: Transform Data in Python
+
+Power Query
+
+Transform Data
+
+Run Python Script
+
+Paste:
+
+import pandas as pd
+
+df = dataset
+
+basket = pd.crosstab(
+    df['TransactionID'],
+    df['Product']
+)
+
+basket = basket.applymap(
+    lambda x: 1 if x > 0 else 0
+)
+
+result = basket
+
+Output:
+
+TransactionID	Bread	Butter	Eggs	Milk
+T001	1	1	0	1
+T002	1	0	1	0
+T003	1	1	0	0
+T004	0	0	1	1
+T005	1	1	0	1
+
+Step 4: Apply Apriori Algorithm
+
+Another Python Script:
+
+import pandas as pd
+from mlxtend.frequent_patterns import apriori
+from mlxtend.frequent_patterns import association_rules
+
+basket = dataset
+
+freq_items = apriori(
+    basket,
+    min_support=0.3,
+    use_colnames=True
+)
+
+rules = association_rules(
+    freq_items,
+    metric="lift",
+    min_threshold=1
+)
+
+result = rules
+
