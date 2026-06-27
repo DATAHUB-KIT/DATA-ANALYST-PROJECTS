@@ -1,0 +1,297 @@
+| OrderID | Date        | Region | State       | Category        | Product  | Sales | Quantity | Profit |
+| ------- | ----------- | ------ | ----------- | --------------- | -------- | ----: | -------: | -----: |
+| 1001    | 01-Jan-2026 | South  | Telangana   | Electronics     | Laptop   | 75000 |        2 |  15000 |
+| 1002    | 02-Jan-2026 | South  | Karnataka   | Furniture       | Chair    | 15000 |        5 |   2500 |
+| 1003    | 03-Jan-2026 | North  | Delhi       | Electronics     | Printer  | 18000 |        3 |   4500 |
+| 1004    | 04-Jan-2026 | West   | Maharashtra | Furniture       | Table    | 25000 |        2 |   5000 |
+| 1005    | 05-Jan-2026 | East   | West Bengal | Office Supplies | Notebook |  7000 |       20 |   1800 |
+| 1006    | 06-Jan-2026 | South  | Tamil Nadu  | Electronics     | Monitor  | 22000 |        4 |   4800 |
+| 1007    | 07-Jan-2026 | North  | Punjab      | Furniture       | Sofa     | 55000 |        1 |  11000 |
+| 1008    | 08-Jan-2026 | West   | Gujarat     | Office Supplies | Pen      |  5000 |       50 |   1200 |
+| 1009    | 09-Jan-2026 | East   | Odisha      | Electronics     | Mouse    |  3000 |       15 |    700 |
+| 1010    | 10-Jan-2026 | South  | Kerala      | Furniture       | Cupboard | 35000 |        2 |   8000 |
+
+
+Step 2: Data Cleaning (Power Query)
+
+Use AI prompts before performing transformations.
+
+Prompt
+
+I have sales data with Date, Region, Category, Product, Sales, Quantity and Profit. Suggest all cleaning steps before creating a dashboard.
+
+AI Response
+
+Remove duplicates
+Handle null values
+Convert Date datatype
+Rename columns
+Remove blank rows
+Format Sales and Profit as Currency
+
+Apply these inside Power Query.
+
+
+Step 3: Create Measures using AI
+
+Instead of writing DAX manually, ask AI.
+
+Example 1
+
+Prompt
+
+Write Power BI DAX to calculate Total Sales.
+
+AI Response
+
+Total Sales =
+SUM(Sales[Sales])
+Example 2
+
+Prompt
+
+Create Total Profit measure.
+
+Total Profit =
+SUM(Sales[Profit])
+Example 3
+
+Prompt
+
+Calculate Profit Margin.
+
+Profit Margin =
+DIVIDE([Total Profit],[Total Sales])*100
+Example 4
+
+Prompt
+
+Calculate Average Order Value.
+
+Average Order Value =
+DIVIDE([Total Sales],DISTINCTCOUNT(Sales[OrderID]))
+
+
+Step 4: AI Assisted Visualization Selection
+
+Instead of guessing visuals, ask AI.
+
+Prompt
+
+I have Sales, Profit, Quantity, Region, Category and Date. Suggest the best Power BI visuals.
+
+AI Response
+
+Business Question        	Visualization
+Sales by Region	          Clustered Bar
+Sales Trend	              Line Chart
+Category Share	          Pie Chart
+Top Products	            Column Chart
+Profit Analysis	          Scatter Plot
+KPIs	                    Cards
+State Performance	          Map
+Sales vs Profit	            Scatter
+========================================
+Monthly Sales Trend
+
+Prompt
+
+Suggest the best visualization for monthly sales trend.
+
+AI
+
+Line Chart
+
+Fields
+
+Date
+
+Sales
+===============================================
+AI Generated Dashboard Story
+
+Prompt
+
+Analyze this sales dashboard like a Business Analyst and provide executive insights.
+
+AI Response
+===============================================
+AI Generated Executive Summary
+
+Prompt
+
+Write a professional executive summary for this dashboard.
+
+AI
+===============================================
+
+AI Generated DAX
+
+Prompt
+
+Write Power BI DAX to calculate Year-to-Date Sales.
+
+YTD Sales =
+TOTALYTD(
+SUM(Sales[Sales]),
+Sales[Date]
+)
+
+Prompt
+
+Write DAX for Running Total.
+
+Running Total =
+CALCULATE(
+[Total Sales],
+FILTER(
+ALL(Sales[Date]),
+Sales[Date]<=MAX(Sales[Date])
+)
+)
+
+Prompt
+
+Create Top 5 Products.
+
+Rank Product =
+RANKX(
+ALL(Sales[Product]),
+[Total Sales]
+)
+
+===========================================
+AI Generated Business Questions
+
+Prompt
+
+Generate business questions for this sales dataset.
+
+AI
+
+Which region generates maximum revenue?
+Which category is most profitable?
+Which products have declining sales?
+Which state contributes highest profit?
+What is average order value?
+Which products have highest margins?
+Monthly sales trend?
+Which customers should be targeted?
+What products should be discontinued?
+Which region requires marketing investment?
+
+
+
+==========================
+q&A
+====================
+1. Sales Analysis
+What is the total sales?
+What is the total profit?
+What is the total quantity sold?
+What is the average sales per order?
+What is the average profit?
+What is the highest sales amount?
+What is the lowest sales amount?
+What is the total number of orders?
+Which month has the highest sales?
+Which month has the lowest sales?
+2. Regional Analysis
+Which region has the highest sales?
+Which region has the highest profit?
+Which region has the lowest sales?
+Show sales by region.
+Show profit by region.
+Compare sales across regions.
+Compare profit across regions.
+Which region has the highest average sales?
+Which state contributes the highest revenue?
+Which state has the lowest profit?
+3. Product Analysis
+Which product has the highest sales?
+Which product generates the highest profit?
+Which product has the lowest sales?
+Show top 10 products by sales.
+Show bottom 10 products by profit.
+Which products are selling the most?
+Which products are underperforming?
+Which products have high sales but low profit?
+Which products have high profit margins?
+Which products need promotional campaigns?
+4. Category Analysis
+Which category has the highest sales?
+Which category has the highest profit?
+Which category contributes the most revenue?
+Compare sales by category.
+Compare profit by category.
+Which category has the highest quantity sold?
+Which category has the lowest profit?
+Which category is growing fastest?
+Which category has declining sales?
+Which category should receive more investment?
+5. Customer Analysis
+Who are the top 10 customers?
+Who generates the highest revenue?
+Which customers buy most frequently?
+Which customers have stopped purchasing?
+Which customers generate the highest profit?
+Which customers receive the highest discounts?
+Which customers have the largest average order value?
+Which customers should be retained?
+Which customers are most valuable?
+Which customers contribute 80% of sales?
+6. Time-Based Analysis
+Show monthly sales trend.
+Show quarterly sales trend.
+Show yearly sales trend.
+Compare this month with last month.
+Compare this year with last year.
+Which month had the highest profit?
+Which month had the highest discount?
+Show sales by weekday.
+Show weekend sales.
+Show seasonal sales trends.
+7. Profitability Analysis
+What is the overall profit margin?
+Which products have the highest profit margin?
+Which regions have the highest profit margin?
+Which categories have the highest profit margin?
+Which products are operating at a loss?
+Which orders generated negative profit?
+Show profit trend over time.
+Compare sales versus profit.
+Show gross profit by category.
+Which business segment is most profitable?
+8. Discount Analysis
+Which products receive the highest discounts?
+What is the average discount?
+Show discount by category.
+Show discount by region.
+Which customers receive maximum discounts?
+Are discounts reducing profitability?
+Which products have high discounts and low sales?
+Which regions offer the highest discounts?
+Compare discount versus profit.
+Does discount increase sales?
+9. Operational Analysis
+Which region has the highest order volume?
+Which warehouse ships the most orders?
+Which shipping mode is most frequently used?
+Which shipping method is the fastest?
+What is the average delivery time?
+Which orders were delivered late?
+Which supplier provides the highest profit?
+Which supplier has delayed deliveries?
+Which products are out of stock?
+Which locations require inventory replenishment?
+10. Executive Decision-Making Questions
+What are the top five business insights?
+Which region requires immediate attention?
+Which products should be discontinued?
+Which products should receive more marketing?
+Where should we increase inventory?
+Which customers should be targeted for cross-selling?
+What is driving revenue growth?
+What factors are reducing profitability?
+What recommendations can improve sales?
+What actions should management take next?
